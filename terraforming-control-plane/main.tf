@@ -11,19 +11,12 @@ terraform {
 locals {
   ops_man_subnet_id = "${var.ops_manager_private ? element(module.infra.infrastructure_subnet_ids, 0) : element(module.infra.public_subnet_ids, 0)}"
 
-  bucket_suffix = "${random_integer.bucket.result}"
-
   default_tags = {
     Environment = "${var.env_name}"
     Application = "Cloud Foundry"
   }
 
   actual_tags = "${merge(var.tags, local.default_tags)}"
-}
-
-resource "random_integer" "bucket" {
-  min = 1
-  max = 100000
 }
 
 module "infra" {
@@ -89,19 +82,8 @@ module "control_plane" {
   private_route_table_ids = "${module.infra.private_route_table_ids}"
   public_subnet_ids       = "${module.infra.public_subnet_ids}"
 
-  bucket_suffix = "${local.bucket_suffix}"
   zone_id       = "${module.infra.zone_id}"
   dns_suffix    = "${var.dns_suffix}"
-
-  create_backup_pas_buckets    = "${var.create_backup_pas_buckets}"
-  create_versioned_pas_buckets = "${var.create_versioned_pas_buckets}"
-
-  ops_manager_iam_user_name = "${module.ops_manager.ops_manager_iam_user_name}"
-  iam_ops_manager_role_name = "${module.ops_manager.ops_manager_iam_role_name}"
-
-  ssl_cert_arn            = "${module.pas_certs.ssl_cert_arn}"
-  create_isoseg_resources = "${var.create_isoseg_resources}"
-  isoseg_ssl_cert_arn     = "${module.isoseg_certs.ssl_cert_arn}"
 
   tags = "${local.actual_tags}"
 }
