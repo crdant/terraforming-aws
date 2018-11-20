@@ -17,11 +17,18 @@ resource "aws_security_group" "plane_lb" {
     to_port     = 443
   }
 
-  egress {
+  ingress {
     cidr_blocks = ["0.0.0.0/0"]
     protocol    = "tcp"
     from_port   = 8443
     to_port     = 8443
+  }
+
+  egress {
+    cidr_blocks = ["0.0.0.0/0"]
+    protocol    = "-1"
+    from_port   = 0
+    to_port     = 0
   }
 
   tags = "${merge(var.tags, map("Name", "${var.env_name}-plane-security-group"))}"
