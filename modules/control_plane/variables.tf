@@ -39,5 +39,5 @@ variable "tags" {
 }
 
 locals {
-  control_plane_cidr      = "${cidrsubnet(var.vpc_cidr, 6, 1)}"
+  plane_cidr      = "${cidrsubnet(var.vpc_cidr, 6, 1)}"
 }
