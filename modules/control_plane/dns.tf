@@ -5,7 +5,7 @@ locals {
 resource "aws_route53_record" "control-plane" {
   count   = "${local.use_route53 ? 1 : 0}"
   zone_id = "${var.zone_id}"
-  name = "plane.${var.dns_zone_dns_name}"
+  name = "plane.${var.env_name}.${var.dns_suffix}"
   type    = "CNAME"
   ttl     = 300
 

@@ -1,6 +1,6 @@
 resource "aws_subnet" "plane_subnets" {
   count             = "${length(var.availability_zones)}"
-  vpc_id            = "${aws_vpc.vpc.id}"
+  vpc_id            = "${var.vpc_id}"
   cidr_block        = "${cidrsubnet(local.plane_cidr, 2, count.index)}"
   availability_zone = "${element(var.availability_zones, count.index)}"
 
@@ -20,5 +20,5 @@ data "template_file" "plane_subnet_gateways" {
 resource "aws_route_table_association" "route_plane_subnets" {
   count          = "${length(var.availability_zones)}"
   subnet_id      = "${element(aws_subnet.plane_subnets.*.id, count.index)}"
-  route_table_id = "${element(aws_route_table.private_route_table.*.id, count.index)}"
+  route_table_id = "${element(var.private_route_table_ids, count.index)}"
 }

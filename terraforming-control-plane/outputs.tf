@@ -88,20 +88,20 @@ output "infrastructure_subnet_cidrs" {
   value = "${module.infra.infrastructure_subnet_cidrs}"
 }
 
-output "plane_subnet_gateways" {
-  value = "${module.infra.plane_subnet_gateways}"
+output "infrastructure_subnet_gateways" {
+  value = "${module.control_plane.plane_subnet_gateways}"
 }
 
 output "plane_subnet_ids" {
-  value = "${module.infra.plane_subnet_ids}"
+  value = "${module.control_plane.plane_subnet_ids}"
 }
 
 output "plane_subnets" {
-  value = "${module.infra.plane_subnets}"
+  value = "${module.control_plane.plane_subnets}"
 }
 
 output "plane_subnet_availability_zones" {
-  value = "${module.infra.plane_subnet_availability_zones}"
+  value = "${module.control_plane.plane_subnet_availability_zones}"
 }
 
 output "plane_subnet_cidrs" {
@@ -126,20 +126,4 @@ output "region" {
 
 output "azs" {
   value = "${var.availability_zones}"
-}
-
-output "web_target_groups" {
-  value = "${module.pas.web_target_groups}"
-}
-
-output "tcp_target_groups" {
-  value = "${module.pas.tcp_target_groups}"
-}
-
-output "ssh_target_groups" {
-  value = "${module.pas.ssh_target_groups}"
-}
-
-output "ssl_cert_arn" {
-  value = "${var.ssl_cert_arn}"
 }

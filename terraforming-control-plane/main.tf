@@ -50,25 +50,9 @@ module "ops_manager" {
   vpc_cidr                 = "${var.vpc_cidr}"
   dns_suffix               = "${var.dns_suffix}"
   zone_id                  = "${module.infra.zone_id}"
-  additional_iam_roles_arn = ["${module.pas.iam_pas_bucket_role_arn}"]
   bucket_suffix            = "${local.bucket_suffix}"
 
   tags = "${local.actual_tags}"
-}
-
-module "pas_certs" {
-  source = "../modules/certs"
-
-  subdomains = ["*.apps", "*.sys", "*.login.sys", "*.uaa.sys"]
-  env_name   = "${var.env_name}"
-  dns_suffix = "${var.dns_suffix}"
-
-  ssl_cert_arn = "${var.ssl_cert_arn}"
-
-  ssl_cert           = "${var.ssl_cert}"
-  ssl_private_key    = "${var.ssl_private_key}"
-  ssl_ca_cert        = "${var.ssl_ca_cert}"
-  ssl_ca_private_key = "${var.ssl_ca_private_key}"
 }
 
 module "control_plane" {
