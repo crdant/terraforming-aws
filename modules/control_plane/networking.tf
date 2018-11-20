@@ -1,7 +1,7 @@
 resource "aws_subnet" "plane_subnets" {
   count             = "${length(var.availability_zones)}"
   vpc_id            = "${var.vpc_id}"
-  cidr_block        = "${cidrsubnet(local.plane_cidr, 2, count.index)}"
+  cidr_block        = "${cidrsubnet(local.control_plane_cidr, 2, count.index)}"
   availability_zone = "${element(var.availability_zones, count.index)}"
 
   tags = "${merge(var.tags, map("Name", "${var.env_name}-infrastructure-subnet${count.index}"))}"
