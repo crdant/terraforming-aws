@@ -11,12 +11,19 @@ terraform {
 locals {
   ops_man_subnet_id = "${var.ops_manager_private ? element(module.infra.infrastructure_subnet_ids, 0) : element(module.infra.public_subnet_ids, 0)}"
 
+  bucket_suffix = "${random_integer.bucket.result}"
+
   default_tags = {
     Environment = "${var.env_name}"
     Application = "Cloud Foundry"
   }
 
   actual_tags = "${merge(var.tags, local.default_tags)}"
+}
+
+resource "random_integer" "bucket" {
+  min = 1
+  max = 100000
 }
 
 module "infra" {
