@@ -6,16 +6,8 @@ output "env_dns_zone_name_servers" {
   value = "${module.infra.name_servers}"
 }
 
-output "sys_domain" {
-  value = "sys.${var.env_name}.${var.dns_suffix}"
-}
-
-output "apps_domain" {
-  value = "apps.${var.env_name}.${var.dns_suffix}"
-}
-
-output "tcp_domain" {
-  value = "tcp.${var.env_name}.${var.dns_suffix}"
+output "control_plane_domain" {
+  value = "plane.${var.env_name}.${var.dns_suffix}"
 }
 
 output "ops_manager_iam_instance_profile_name" {
